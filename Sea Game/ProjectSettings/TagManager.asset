@@ -4,16 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Ocean
+  - Ocean Obstacle
   - Ground
-  - Water
-  - GroundObstacle
-  - WaterObstacle
-  - Boat
+  - Ground Obstacle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
