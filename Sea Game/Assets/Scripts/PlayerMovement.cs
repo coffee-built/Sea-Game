@@ -4,6 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float playerSpeed = 2.0f;
     public GameObject boat;
+    public float landPushBackFactor = 5;
 
     private Rigidbody2D rb;
     private Vector2 playerVelocity;
@@ -11,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private bool onBoat;
     private bool onGround;
     private bool movementStalled;
+    private Vector2 backToLandDirection;
 
     void Start()
     {
@@ -33,6 +35,10 @@ public class PlayerMovement : MonoBehaviour
 
             }
         }
+        else
+        {
+            rb.AddForce(backToLandDirection, ForceMode2D.Impulse);
+        }
     }
     
     void OnTriggerExit2D(Collider2D other)
@@ -42,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
             if (other.tag == "Ground")
             {
                 movementStalled = true;
-                rb.velocity = -1 * rb.velocity;
+                backToLandDirection = -1 * landPushBackFactor * rb.velocity;
             }
         }
         else
@@ -60,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
             if (other.tag == "Ground")
             {
                 movementStalled = false;
+                backToLandDirection = Vector2.zero;
             }
             if (other.tag == "Boat")
             {
