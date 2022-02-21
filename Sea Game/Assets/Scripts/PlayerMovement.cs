@@ -28,7 +28,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (!onBoat)
             {
-                rb.AddForce(move, ForceMode2D.Impulse);
+                rb.velocity = move * playerSpeed;
+                //rb.AddForce(move, ForceMode2D.Impulse);
             }
             else
             {
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             rb.AddForce(backToLandDirection, ForceMode2D.Impulse);
+            //rb.velocity = backToLandDirection;
         }
     }
     
@@ -48,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
             if (other.tag == "Ground")
             {
                 movementStalled = true;
-                backToLandDirection = -1 * landPushBackFactor * rb.velocity;
+                backToLandDirection = -1 * landPushBackFactor * rb.velocity * playerSpeed;
             }
         }
         else
