@@ -3,21 +3,30 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float playerSpeed = 2.0f;
+    public float boatSpeed = 2.0f;
     public GameObject boat;
+    public GameObject camera;
+    public float playerCameraZoom = 5;
+    public float boatCameraZoom = 10;
     public float landPushBackFactor = 5;
 
     private Rigidbody2D rb;
+    private Rigidbody2D brb;
     private Vector2 playerVelocity;
 
     private bool onBoat;
     private bool onGround;
     private bool movementStalled;
     private Vector2 backToLandDirection;
+    private Camera thisCamera;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        brb = boat.GetComponent<Rigidbody2D>();
         onBoat = false;
+        thisCamera = camera.GetComponent<Camera>();
+        thisCamera.orthographicSize = playerCameraZoom;
     }
 
     void Update()
@@ -29,17 +38,16 @@ public class PlayerMovement : MonoBehaviour
             if (!onBoat)
             {
                 rb.velocity = move * playerSpeed;
-                //rb.AddForce(move, ForceMode2D.Impulse);
             }
             else
             {
-
+                brb.AddForce(boatSpeed * move, ForceMode2D.Impulse);
+                rb.position = brb.position;
             }
         }
         else
         {
             rb.AddForce(backToLandDirection, ForceMode2D.Impulse);
-            //rb.velocity = backToLandDirection;
         }
     }
     
@@ -53,12 +61,7 @@ public class PlayerMovement : MonoBehaviour
                 backToLandDirection = -1 * landPushBackFactor * rb.velocity * playerSpeed;
             }
         }
-        else
-        {
-            if (other.tag == "Water")
-            {
-            }
-        }
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -72,16 +75,23 @@ public class PlayerMovement : MonoBehaviour
             }
             if (other.tag == "Boat")
             {
+                thisCamera.orthographicSize = boatCameraZoom;
                 Debug.Log("Boarding Boat");
-                var boatPosition = boat.transform.position;
-                var playerPosition = gameObject.transform.position;
-                var playerOnBoatVector = new Vector2(boatPosition.x - playerPosition.x, boatPosition.z - playerPosition.z);
-
-                //playerController.Move(playerOnBoatVector);
+                rb.position = brb.position;
                 onBoat = true;
-
+            }
+        }
+        else
+        {
+            if (other.tag == "Ground")
+            {
+                thisCamera.orthographicSize = playerCameraZoom;
+                Debug.Log("Leaving Boat");
+                brb.velocity = Vector2.zero;
+                onBoat = false;
             }
         }
 
     }
+    
 }

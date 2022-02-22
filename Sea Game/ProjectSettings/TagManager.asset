@@ -8,6 +8,7 @@ TagManager:
   - Ocean Obstacle
   - Ground
   - Ground Obstacle
+  - Boat
   layers:
   - Default
   - TransparentFX
