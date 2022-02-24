@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
         onBoat = false;
         thisCamera = camera.GetComponent<Camera>();
         thisCamera.orthographicSize = playerCameraZoom;
+
+        rb.freezeRotation = true;
+        brb.freezeRotation = true;
     }
 
     void Update()
@@ -88,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
                 thisCamera.orthographicSize = playerCameraZoom;
                 Debug.Log("Leaving Boat");
                 brb.velocity = Vector2.zero;
+                
                 onBoat = false;
             }
         }
