@@ -701,6 +701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eef2205490541440869509c3b04a33e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 1b630d6e76b51e64ab64af19951e81a1, type: 2}
   playerSpeed: 4.5
   boatSpeed: 6.5
   boat: {fileID: 1867488333}

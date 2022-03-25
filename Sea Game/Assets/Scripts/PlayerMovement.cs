@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public InventoryObject inventory;
+
     public float playerSpeed = 2.0f;
     public float boatSpeed = 2.0f;
     public GameObject boat;
